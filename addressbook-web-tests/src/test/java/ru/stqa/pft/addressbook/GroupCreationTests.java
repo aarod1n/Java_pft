@@ -15,7 +15,6 @@ public class GroupCreationTests {
     System.setProperty("webdriver.chrome.driver", "src/chromedriver.exe");
     wd = new ChromeDriver();
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
     wd.get("http://localhost/addressbook/");
     login("admin", "secret");
   }
