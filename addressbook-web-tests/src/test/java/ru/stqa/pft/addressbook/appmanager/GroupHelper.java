@@ -24,11 +24,20 @@ public class GroupHelper extends HelperBase {
     click(By.name("new"));
   }
 
-  public void selectGroupToDelet(){
+  public void selectGroup(){
     click(By.xpath(("//*[@id=\"content\"]/form/span[1]/input")));
   }
 
-  public void deletSelectedGroup(){
-    click(By.xpath("//*[@id=\"content\"]/form/input[2]"));
+  public void deleteSelectedGroup(){
+    click(By.xpath("//*[@id='content']/form/input[2]"));
   }
+
+  public void initGroupModification() {
+    click(By.name("edit"));
+  }
+
+  public void initUpdateGroup() {
+    click(By.name("update"));
+  }
+
 }

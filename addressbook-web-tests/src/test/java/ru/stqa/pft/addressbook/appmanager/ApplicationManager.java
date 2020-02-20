@@ -62,4 +62,9 @@ public class ApplicationManager {
     return sessionHelper;
   }
 
+  //Для закрытия диалогового окна (alert), которое появляется при удалении контакта, нужно использовать такую команду драйвера:
+  public void alertAccept(){
+    wd.switchTo().alert().accept();
+  }
+
 }
