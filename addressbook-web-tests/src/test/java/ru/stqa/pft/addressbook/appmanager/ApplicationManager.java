@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.BrowserType;
 
 
 import java.util.concurrent.TimeUnit;
@@ -15,10 +18,26 @@ public class ApplicationManager {
   private NavigationHelper navigationHelper;
   private ContactHelper contactHelper;
   private SessionHelper sessionHelper;
+  private String browser;
 
+  public ApplicationManager(String browser) {
+    this.browser = browser;
+  }
+
+  //Инициализация драйверов и переменных для запуска тестов
   public void init() {
-    System.setProperty("webdriver.chrome.driver", "src/chromedriver.exe");
-    wd = new ChromeDriver();
+    //Указываем путь к драйверу(сейчас положил в корневой каталог проекта)
+    //System.setProperty("webdriver.chrome.driver", "src/chromedriver.exe");
+
+    //Выбираем какой браузер использовть в тестах
+    if(browser.equals(BrowserType.CHROME)) {
+      wd = new ChromeDriver();
+    } else if (browser.equals(BrowserType.FIREFOX)) {
+      wd = new FirefoxDriver();
+    } else if (browser.equals(BrowserType.IE)){
+      wd = new InternetExplorerDriver();
+    }
+
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/");
     groupHelper = new GroupHelper(wd);
@@ -37,6 +56,7 @@ public class ApplicationManager {
   }
 
 
+  //Проверка наличия объекта на страницы
   public boolean isElementPresent(By by) {
     try {
       wd.findElement(by);
@@ -46,6 +66,7 @@ public class ApplicationManager {
     }
   }
 
+  //Возвращаем хелперы для использования их методов
   public GroupHelper getGroupHelper() {
     return groupHelper;
   }
@@ -61,6 +82,7 @@ public class ApplicationManager {
   public SessionHelper getSessionHelper(){
     return sessionHelper;
   }
+  //
 
   //Для закрытия диалогового окна (alert), которое появляется при удалении контакта, нужно использовать такую команду драйвера:
   public void alertAccept(){
