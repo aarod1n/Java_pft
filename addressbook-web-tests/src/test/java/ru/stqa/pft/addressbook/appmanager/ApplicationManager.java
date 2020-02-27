@@ -26,9 +26,6 @@ public class ApplicationManager {
 
   //Инициализация драйверов и переменных для запуска тестов
   public void init() {
-    //Указываем путь к драйверу(сейчас положил в корневой каталог проекта)
-    //System.setProperty("webdriver.chrome.driver", "src/chromedriver.exe");
-
     //Выбираем какой браузер использовть в тестах
     if(browser.equals(BrowserType.CHROME)) {
       wd = new ChromeDriver();
@@ -38,7 +35,7 @@ public class ApplicationManager {
       wd = new InternetExplorerDriver();
     }
 
-    wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/");
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);
@@ -53,17 +50,6 @@ public class ApplicationManager {
 
   public void logOut() {
     wd.findElement(By.linkText("Logout")).click();
-  }
-
-
-  //Проверка наличия объекта на страницы
-  public boolean isElementPresent(By by) {
-    try {
-      wd.findElement(by);
-      return true;
-    } catch (NoSuchElementException e) {
-      return false;
-    }
   }
 
   //Возвращаем хелперы для использования их методов

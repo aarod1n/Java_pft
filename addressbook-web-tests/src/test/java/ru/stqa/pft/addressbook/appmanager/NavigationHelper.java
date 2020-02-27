@@ -13,14 +13,25 @@ public class NavigationHelper extends HelperBase{
   }
 
   public void goToGroupPage() {
+    if(isElementPresent(By.xpath("\"//*[@id=\\\"content\\\"]/h1\""))
+            && wd.findElement(By.xpath("//*[@id=\"content\"]/h1")).getText().equals("Groups")) {
+      return;
+    }
     click(By.linkText("groups"));
   }
 
   public void goToNewContact() {
+    if(isElementPresent(By.xpath("\"//*[@id=\\\"content\\\"]/h1\""))
+            && wd.findElement(By.xpath("//*[@id=\"content\"]/h1")).getText().equals("Edit / add address book entry")){
+      return;
+    }
     click(By.linkText("add new"));
   }
 
   public void goToHomePage() {
+    if(isElementPresent(By.id("maintable"))) {
+    return;
+    }
     click(By.linkText("home"));
   }
 
