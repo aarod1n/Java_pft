@@ -12,7 +12,7 @@ public class GroupModificationTests extends TestBase {
     if(!app.getGroupHelper().isThereAGroup()){
       app.getGroupHelper().groupCreate(new GroupData("test1", "test1", "test1"));
     }
-    
+
     app.getNavigationHelper().goToGroupPage();
     app.getGroupHelper().groupModification(new GroupData("Modification1", "Modification2", "Modification3"));
     app.getNavigationHelper().goToGroupPage();
