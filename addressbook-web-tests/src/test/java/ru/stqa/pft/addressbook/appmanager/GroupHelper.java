@@ -16,15 +16,15 @@ public class GroupHelper extends HelperBase {
     submitGroupCreation();
   }
 
-  public void groupModification(GroupData group){
-    selectGroup();
+  public void groupModification(GroupData group, int index){
+    selectGroup(index);
     initGroupModification();
     fillGroupForm(group);
     initUpdateGroup();
   }
 
-  public void groupDeletion(){
-    selectGroup();
+  public void groupDeletion(int index){
+    selectGroup(index);
     deleteSelectedGroup();
   }
 
@@ -42,8 +42,9 @@ public class GroupHelper extends HelperBase {
     click(By.name("new"));
   }
 
-  public void selectGroup() {
-    click(By.xpath(("//*[@id=\"content\"]/form/span[1]/input")));
+  public void selectGroup(int index) {
+    index -= 1;
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void deleteSelectedGroup() {
@@ -63,4 +64,7 @@ public class GroupHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
+  public int getGroupCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 }
