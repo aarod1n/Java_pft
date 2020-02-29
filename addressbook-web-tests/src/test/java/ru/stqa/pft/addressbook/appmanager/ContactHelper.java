@@ -17,7 +17,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void submitContactCreation() {
-    click(By.xpath("(//input[@name='submit'])[2]"));
+    click(By.name("submit"));
   }
 
   public void fillContactForm(ContactData contact, boolean creation) {
@@ -28,7 +28,28 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contact.getEMail());
 
     if(creation){
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contact.getGroup());
+      //Работа с данными в выпадающем списке
+      Select select = new Select(wd.findElement(By.name("new_group")));
+      List<WebElement> list = select.getOptions();
+
+      //Если группы есть и есть равная переданной, берем ее
+      //Если группы есть, но нету переданной, берем первую существующую
+      //Если групп нет, ставим [none]
+      if(list.size() > 1){
+        boolean itemFound = false;
+        for(int i = 0; i < list.size(); i++)
+        {
+          if(list.get(i).getText().equals(contact.getGroup())){
+            select.selectByVisibleText(contact.getGroup());
+            itemFound = true;
+            break;
+          }
+        }
+        if(!itemFound)
+        select.selectByVisibleText(list.get(1).getText());
+      } else{
+        select.selectByVisibleText(select.getFirstSelectedOption().getText());
+      }
     } else{
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -49,6 +70,26 @@ public class ContactHelper extends HelperBase {
 
   public void submitContactUpdate() {
     click(By.cssSelector("[value='Update']"));
+  }
+
+  public boolean isThereAContact(){
+    return isElementPresent(By.name("selected[]"));
+  }
+
+  public void contactCreation(ContactData contact, boolean creation){
+    fillContactForm(contact, true);
+    submitContactCreation();
+  }
+
+  public void contactModification(ContactData contact, int index, boolean creation){
+    selectContactForEdit(index);
+    fillContactForm(contact, false);
+    submitContactUpdate();
+  }
+
+  public void contactDeletion(int index){
+    selectContact(index);
+    deleteSelectContact();
   }
 
 }

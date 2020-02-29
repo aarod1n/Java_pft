@@ -4,16 +4,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 
-public class NavigationHelper extends HelperBase{
+public class NavigationHelper extends HelperBase {
 
   private WebDriver wd;
 
-  public NavigationHelper(WebDriver wd){
+  public NavigationHelper(WebDriver wd) {
     super(wd);
   }
 
   public void goToGroupPage() {
-    if(isElementPresent(By.xpath("\"//*[@id=\\\"content\\\"]/h1\""))
+    if (isElementPresent(By.xpath("\"//*[@id=\\\"content\\\"]/h1\""))
             && wd.findElement(By.xpath("//*[@id=\"content\"]/h1")).getText().equals("Groups")) {
       return;
     }
@@ -21,16 +21,16 @@ public class NavigationHelper extends HelperBase{
   }
 
   public void goToNewContact() {
-    if(isElementPresent(By.xpath("\"//*[@id=\\\"content\\\"]/h1\""))
-            && wd.findElement(By.xpath("//*[@id=\"content\"]/h1")).getText().equals("Edit / add address book entry")){
+    if (isElementPresent(By.xpath("\"//*[@id=\\\"content\\\"]/h1\""))
+            && wd.findElement(By.xpath("//*[@id=\"content\"]/h1")).getText().equals("Edit / add address book entry")) {
       return;
     }
     click(By.linkText("add new"));
   }
 
   public void goToHomePage() {
-    if(isElementPresent(By.id("maintable"))) {
-    return;
+    if (isElementPresent(By.id("maintable"))) {
+      return;
     }
     click(By.linkText("home"));
   }
