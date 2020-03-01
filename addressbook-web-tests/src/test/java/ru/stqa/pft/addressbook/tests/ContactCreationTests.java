@@ -28,8 +28,6 @@ public class ContactCreationTests extends TestBase {
 
     //Создаем переменную компаратор, которая умеет сравнивать объекты нашего класса
     Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
 
     before.add(contact);
     before.sort(byId);
