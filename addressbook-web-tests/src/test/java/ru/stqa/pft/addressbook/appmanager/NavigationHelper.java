@@ -12,7 +12,7 @@ public class NavigationHelper extends HelperBase {
     super(wd);
   }
 
-  public void goToGroupPage() {
+  public void groupPage() {
     if (isElementPresent(By.xpath("\"//*[@id=\\\"content\\\"]/h1\""))
             && wd.findElement(By.xpath("//*[@id=\"content\"]/h1")).getText().equals("Groups")) {
       return;

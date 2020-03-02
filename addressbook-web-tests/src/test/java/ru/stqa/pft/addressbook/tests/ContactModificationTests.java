@@ -12,10 +12,10 @@ public class ContactModificationTests extends TestBase {
   @Test
   public void testContactModification() {
 
-    app.getNavigationHelper().goToHomePage();
+    app.goTo().goToHomePage();
     //Проверяем наличие контакта
     if (!app.getContactHelper().isThereAContact()) {
-      app.getNavigationHelper().goToNewContact();
+      app.goTo().goToNewContact();
       app.getContactHelper()
               .contactCreation(new ContactData("test1", "FistName", "qwe@mail.ru", "LastName", "qwer, asdf 4, 123", "123345234"), true);
     }
@@ -23,9 +23,9 @@ public class ContactModificationTests extends TestBase {
     List<ContactData> before = app.getContactHelper().getContactList();
     ContactData contact = new ContactData(before.get(0).getId(),null, "FistNameEdit", "qweEdit@mail.ru", "LastNameEdit", "qwerEdit, asdfEdit 4, 123", "123345234Edit");
 
-    app.getNavigationHelper().goToHomePage();
+    app.goTo().goToHomePage();
     app.getContactHelper().contactModification(contact, 0, false);
-    app.getNavigationHelper().goToHomePage();
+    app.goTo().goToHomePage();
 
     //Получили список контактов после модификации
     List<ContactData> after = app.getContactHelper().getContactList();

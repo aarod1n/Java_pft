@@ -14,20 +14,20 @@ public class GroupHelper extends HelperBase {
     super(wd);
   }
 
-  public void groupCreate(GroupData group){
+  public void create(GroupData group){
     initGroupCreation();
     fillGroupForm(group);
     submitGroupCreation();
   }
 
-  public void groupModification(GroupData group, int index){
+  public void modification(GroupData group, int index){
     selectGroup(index);
     initGroupModification();
     fillGroupForm(group);
     initUpdateGroup();
   }
 
-  public void groupDeletion(int index){
+  public void deletion(int index){
     selectGroup(index);
     deleteSelectedGroup();
   }
@@ -71,7 +71,7 @@ public class GroupHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<GroupData> getGroupList(){
+  public List<GroupData> list(){
 
     //List - интерфейс, ArrayList - класс реализующий данный интерфейс.
     //Поэтому можем создать List ссылающийся на объекты ArrayList
@@ -83,7 +83,7 @@ public class GroupHelper extends HelperBase {
     for(WebElement element : elements){
       String text = element.getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      GroupData group = new GroupData(id, text, null, null);
+      GroupData group = new GroupData().withId(id).withName(text);
       groups.add(group);
     }
     return groups;
