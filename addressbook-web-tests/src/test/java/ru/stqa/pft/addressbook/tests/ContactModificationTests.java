@@ -19,7 +19,7 @@ public class ContactModificationTests extends TestBase {
       app.getContactHelper()
               .contactCreation(new ContactData("test1", "FistName", "qwe@mail.ru", "LastName", "qwer, asdf 4, 123", "123345234"), true);
     }
-    //Получили списаок контактов
+    //Получили список контактов
     List<ContactData> before = app.getContactHelper().getContactList();
     ContactData contact = new ContactData(before.get(0).getId(),null, "FistNameEdit", "qweEdit@mail.ru", "LastNameEdit", "qwerEdit, asdfEdit 4, 123", "123345234Edit");
 
