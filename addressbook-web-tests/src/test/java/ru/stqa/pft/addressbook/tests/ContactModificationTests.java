@@ -17,11 +17,16 @@ public class ContactModificationTests extends TestBase {
     if (!app.getContactHelper().isThereAContact()) {
       app.goTo().goToNewContact();
       app.getContactHelper()
-              .contactCreation(new ContactData("test1", "FistName", "qwe@mail.ru", "LastName", "qwer, asdf 4, 123", "123345234"), true);
+              .contactCreation(new ContactData()
+                      .withGroup("test1").withFirstName("FistName").withEMail("qwe@mail.ru")
+                      .withLastName("LastName").withAddress("qwer, asdf 4, 123").withMobile("123345234"),
+                      true);
     }
     //Получили список контактов
     List<ContactData> before = app.getContactHelper().getContactList();
-    ContactData contact = new ContactData(before.get(0).getId(),null, "FistNameEdit", "qweEdit@mail.ru", "LastNameEdit", "qwerEdit, asdfEdit 4, 123", "123345234Edit");
+    ContactData contact = new ContactData()
+            .withId(before.get(0).getId()).withGroup("test1").withFirstName("FistNameEdit")
+            .withEMail("qwe@mail.ru").withLastName("LastNameEdit").withAddress("qwer, asdf 4, 123").withMobile("123345234");
 
     app.goTo().goToHomePage();
     app.getContactHelper().contactModification(contact, 0, false);

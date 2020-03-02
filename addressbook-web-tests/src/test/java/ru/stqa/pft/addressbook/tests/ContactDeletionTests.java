@@ -19,7 +19,10 @@ public class ContactDeletionTests extends TestBase {
     if (!app.getContactHelper().isThereAContact()) {
       app.goTo().goToNewContact();
       app.getContactHelper()
-              .contactCreation(new ContactData("test1", "FistName", "qwe@mail.ru", "LastName", "qwer, asdf 4, 123", "123345234"), true);
+              .contactCreation(new ContactData()
+                      .withGroup("test1").withFirstName("FistName").withEMail("qwe@mail.ru")
+                      .withLastName("LastName").withAddress("qwer, asdf 4, 123").withMobile("123345234"),
+                      true);
     }
 
     app.goTo().goToHomePage();

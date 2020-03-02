@@ -110,7 +110,7 @@ public class ContactHelper extends HelperBase {
 
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       //Создаем контакт и кладем его в список
-      contacts.add(new ContactData(id, name, lastName));
+      contacts.add(new ContactData().withId(id).withFirstName(name).withLastName(lastName));
     }
     return contacts;
   }

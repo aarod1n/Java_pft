@@ -16,7 +16,9 @@ public class ContactCreationTests extends TestBase {
     //Создаем список контактов изначально
     List<ContactData> before = app.getContactHelper().getContactList();
 
-    ContactData contact = new ContactData("test1", "FistName", "qwe@mail.ru", "LastName", "qwer, asdf 4, 123", "123345234");
+    ContactData contact = new ContactData()
+            .withGroup("test1").withFirstName("FistName").withEMail("qwe@mail.ru")
+            .withLastName("LastName").withAddress("qwer, asdf 4, 123").withMobile("123345234");
     app.goTo().goToNewContact();
 
     app.getContactHelper().contactCreation(contact, true);
