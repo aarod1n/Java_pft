@@ -4,9 +4,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
-
-import java.util.Comparator;
-import java.util.List;
+import ru.stqa.pft.addressbook.model.Groups;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.*;
 
 public class GroupDeletionTests  extends TestBase{
 
@@ -14,7 +15,7 @@ public class GroupDeletionTests  extends TestBase{
   public void ensurePreconditions(){
     app.goTo().groupPage();
     //Проверяем наличие группы
-    if(app.group().list().size() == 0){
+    if(app.group().all().size() == 0){
       app.group().create(new GroupData().withName("test1").withFooter("test1").withHeader("test1"));
     }
   }
@@ -22,18 +23,15 @@ public class GroupDeletionTests  extends TestBase{
   @Test
   public void testGroupDeletion() {
 
-    List<GroupData> before = app.group().list();
-    int index = before.size()- 1;
+    Groups before = app.group().all();
+    GroupData deletedGroup = before.iterator().next();
     app.goTo().groupPage();
-    app.group().deletion(index);
+    app.group().deletionById(deletedGroup);
     app.goTo().groupPage();
-    List<GroupData> after = app.group().list();
-    before.remove(index);
-    Assert.assertEquals(after.size(), before.size());
-    //Создаем переменную компаратор, которая умеет сравнивать объекты нашего класса
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+    Groups after = app.group().all();
+    before.remove(deletedGroup);
+    assertEquals(after.size(), before.size());
+    //Сравнение множеств v2
+    assertThat(after, equalTo(before.withOut(deletedGroup)));
   }
 }

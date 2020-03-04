@@ -4,9 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
+
+import java.util.HashSet;
 import java.util.List;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class GroupHelper extends HelperBase {
 
@@ -27,9 +31,20 @@ public class GroupHelper extends HelperBase {
     initUpdateGroup();
   }
 
-  public void deletion(int index){
-    selectGroup(index);
+  public void deletionById(GroupData group){
+    selectGroupById(group.getId());
     deleteSelectedGroup();
+  }
+
+  public void modificationById(GroupData group) {
+    selectGroupById(group.getId());
+    initGroupModification();
+    fillGroupForm(group);
+    initUpdateGroup();
+  }
+
+  private void selectGroupById(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
   public void submitGroupCreation() {
@@ -71,14 +86,13 @@ public class GroupHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
+  /*
   public List<GroupData> list(){
-
     //List - интерфейс, ArrayList - класс реализующий данный интерфейс.
     //Поэтому можем создать List ссылающийся на объекты ArrayList
     List<GroupData> groups = new ArrayList<GroupData>();
     //Список веб элементов всех групп
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
-
     //Пробегаем по коллекции elements
     for(WebElement element : elements){
       String text = element.getText();
@@ -88,4 +102,23 @@ public class GroupHelper extends HelperBase {
     }
     return groups;
   }
+  */
+
+  public Groups all(){
+    //List - интерфейс, ArrayList - класс реализующий данный интерфейс.
+    //Поэтому можем создать List ссылающийся на объекты ArrayList
+    Groups groups = new Groups();
+    //Список веб элементов всех групп
+    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+    //Пробегаем по коллекции elements
+    for(WebElement element : elements){
+      String text = element.getText();
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      GroupData group = new GroupData().withId(id).withName(text);
+      groups.add(group);
+    }
+    return groups;
+  }
+
+
 }
