@@ -42,8 +42,7 @@ public class ContactDeletionTests extends TestBase {
     app.goTo().homePage();
     //Создаем множество контактов после удаления
     Contacts after = app.contact().all();
-    before.remove(contactDeletion);
-    assertEquals(after.size(), before.size());
+    assertEquals(after.size(), before.size() - 1);
     //Сравнение множеств v2
     assertThat(after, equalTo(before.withOut(contactDeletion)));
   }

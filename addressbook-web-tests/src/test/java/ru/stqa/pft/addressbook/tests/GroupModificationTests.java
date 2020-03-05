@@ -8,6 +8,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -33,14 +34,7 @@ public class GroupModificationTests extends TestBase {
     app.group().modificationById(group);
     app.goTo().groupPage();
     Groups after = app.group().all();
-    before.remove(groupModification);
-    before.add(group);
-    Assert.assertEquals(after.size(), before.size());
-
-    //Сравнение множеств
-    //Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
-
     //Сравнение множеств v2
-    assertThat(after, CoreMatchers.equalTo(before.withOut(groupModification).withAddet(group)));
+    assertThat(after, equalTo(before.withOut(groupModification).withAddet(group)));
   }
 }

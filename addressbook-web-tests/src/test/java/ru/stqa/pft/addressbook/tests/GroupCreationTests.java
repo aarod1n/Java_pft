@@ -17,17 +17,10 @@ public class GroupCreationTests extends TestBase {
     app.group().create(group);
     app.goTo().groupPage();
     Groups after = app.group().all();
-
     //Тут лямбда выражением получаем максимальный id группы
     group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-    //before.add(group);
-
     //Быстрое сравнение
     assertThat(after.size(), equalTo(before.size() + 1));
-
-    //Сравнение множеств
-    //Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
-
     //Сравнение множеств v2
     assertThat(after, equalTo(before.withAddet(group)));
   }
