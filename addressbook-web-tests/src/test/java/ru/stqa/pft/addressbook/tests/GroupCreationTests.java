@@ -20,14 +20,10 @@ public class GroupCreationTests extends TestBase {
 
     //Тут лямбда выражением получаем максимальный id группы
     group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-    before.add(group);
+    //before.add(group);
 
-    //Создаем переменную компаратор, которая умеет сравнивать объекты нашего класса
-    //Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    //before.sort(byId);
-    //after.sort(byId);
     //Быстрое сравнение
-    assertThat(after.size(), equalTo(before.size()));
+    assertThat(after.size(), equalTo(before.size() + 1));
 
     //Сравнение множеств
     //Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));

@@ -24,7 +24,7 @@ public class GroupModificationTests extends TestBase {
 
   @Test
   public void testGroupModification() {
-
+    app.goTo().groupPage();
     Groups before = app.group().all();
     GroupData groupModification = before.iterator().next();
     GroupData group = new GroupData()

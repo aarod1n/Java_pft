@@ -1,8 +1,9 @@
 package ru.stqa.pft.addressbook.model;
 
 import java.util.Objects;
+import java.util.Spliterator;
 
-public class ContactData {
+public class ContactData extends Contacts {
 
   private int id = Integer.MAX_VALUE;
   private String firstName;
@@ -10,7 +11,6 @@ public class ContactData {
   private String lastName;
   private String address;
   private String mobile;
-
   private String group;
 
   public String getFirstName() {
@@ -39,6 +39,22 @@ public class ContactData {
 
   public int getId() {
     return id;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id &&
+            Objects.equals(firstName, that.firstName) &&
+            Objects.equals(lastName, that.lastName);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), id, firstName, lastName);
   }
 
   public ContactData withId(int id) {
@@ -71,30 +87,18 @@ public class ContactData {
     return this;
   }
 
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            '}';
+  }
+
   public ContactData withGroup(String group) {
     this.group = group;
     return this;
   }
 
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            '}';
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return Objects.equals(firstName, that.firstName) &&
-            Objects.equals(lastName, that.lastName);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(firstName, lastName);
-  }
 }
