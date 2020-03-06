@@ -33,6 +33,8 @@ public class GroupModificationTests extends TestBase {
     app.goTo().groupPage();
     app.group().modificationById(group);
     app.goTo().groupPage();
+    //Быстрое сравнение
+    assertThat(app.group().count(), equalTo(before.size()));
     Groups after = app.group().all();
     //Сравнение множеств v2
     assertThat(after, equalTo(before.withOut(groupModification).withAddet(group)));

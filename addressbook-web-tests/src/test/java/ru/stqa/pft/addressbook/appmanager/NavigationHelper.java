@@ -35,4 +35,8 @@ public class NavigationHelper extends HelperBase {
     click(By.linkText("home"));
   }
 
+  public void editForms(int id){
+    click(By.cssSelector("a[href='edit.php?id=" + id));
+  }
+
 }

@@ -16,11 +16,11 @@ public class GroupCreationTests extends TestBase {
     GroupData group = new GroupData().withName("test1").withFooter("test1").withHeader("test1");
     app.group().create(group);
     app.goTo().groupPage();
+    //Быстрое сравнение
+    assertThat(app.group().count(), equalTo(before.size() + 1));
     Groups after = app.group().all();
     //Тут лямбда выражением получаем максимальный id группы
     group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-    //Быстрое сравнение
-    assertThat(after.size(), equalTo(before.size() + 1));
     //Сравнение множеств v2
     assertThat(after, equalTo(before.withAddet(group)));
   }
