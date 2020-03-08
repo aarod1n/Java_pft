@@ -41,11 +41,6 @@ public class ContactCreationTests extends TestBase {
     //Создаем множество контактов изначально
     Contacts before = app.contact().all();
     File photo = new File("src/test/res/1.jpg");
-
-    /*ContactData contact = new ContactData()
-            .withGroup("test1").withFirstName("FistName").withEMail("qwe@mail.ru")
-            .withLastName("LastName").withAddress("qwer, asdf 4, 123").withMobilePhone("123345234").withPhoto(photo);*/
-
     app.goTo().newContact();
     app.contact().creation(contact, true);
     app.goTo().homePage();

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.stqa.pft.addressbook.tests.ContactCreationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-08T22:48:51" hostname="onepc" time="1.742">
+<testsuite name="ru.stqa.pft.addressbook.tests.ContactCreationTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-03-08T22:55:54" hostname="onepc" time="9.661">
   <properties/>
-  <testcase name="testContactCreation[0](ContactData{id=2147483647, firstName='FirstName 0', eMail='eMail 0', lastName='LastName 0', address='Address 0', mobilePhone='mobilePhone 0', allPhones='null', allEmail='null'})" classname="ru.stqa.pft.addressbook.tests.ContactCreationTests" time="1.742"/>
+  <testcase name="testContactCreation[0](ContactData{id=2147483647, firstName='FirstName 0', eMail='eMail 0', lastName='LastName 0', address='Address 0', mobilePhone='mobilePhone 0', allPhones='null', allEmail='null'})" classname="ru.stqa.pft.addressbook.tests.ContactCreationTests" time="1.945"/>
+  <testcase name="testContactCreation[1](ContactData{id=2147483647, firstName='FirstName 1', eMail='eMail 1', lastName='LastName 1', address='Address 1', mobilePhone='mobilePhone 1', allPhones='null', allEmail='null'})" classname="ru.stqa.pft.addressbook.tests.ContactCreationTests" time="1.9"/>
+  <testcase name="testContactCreation[2](ContactData{id=2147483647, firstName='FirstName 2', eMail='eMail 2', lastName='LastName 2', address='Address 2', mobilePhone='mobilePhone 2', allPhones='null', allEmail='null'})" classname="ru.stqa.pft.addressbook.tests.ContactCreationTests" time="1.909"/>
+  <testcase name="testContactCreation[3](ContactData{id=2147483647, firstName='FirstName 3', eMail='eMail 3', lastName='LastName 3', address='Address 3', mobilePhone='mobilePhone 3', allPhones='null', allEmail='null'})" classname="ru.stqa.pft.addressbook.tests.ContactCreationTests" time="1.884"/>
+  <testcase name="testContactCreation[4](ContactData{id=2147483647, firstName='FirstName 4', eMail='eMail 4', lastName='LastName 4', address='Address 4', mobilePhone='mobilePhone 4', allPhones='null', allEmail='null'})" classname="ru.stqa.pft.addressbook.tests.ContactCreationTests" time="2.02"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
