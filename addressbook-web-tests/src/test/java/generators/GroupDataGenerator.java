@@ -62,12 +62,13 @@ public class GroupDataGenerator {
     return groups;
   }
 
+  //Добавил try для автозакрытия файла
   private void saveAsCSV(List<GroupData> groups, File file) throws IOException {
-    Writer writer = new FileWriter(file);
-    for (GroupData group : groups) {
-      writer.write(String.format("%s; %s; %s\n", group.getName(), group.getHeader(), group.getFooter()));
+    try(Writer writer = new FileWriter(file)) {
+      for (GroupData group : groups) {
+        writer.write(String.format("%s; %s; %s\n", group.getName(), group.getHeader(), group.getFooter()));
+      }
     }
-    writer.close();
   }
 
   private void saveAsXML(List<GroupData> groups, File file) throws IOException{
@@ -77,17 +78,17 @@ public class GroupDataGenerator {
     //Обрабатывать все аннотации в классе GroupData
     xStream.processAnnotations(GroupData.class);
     String xml = xStream.toXML(groups);
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    try(Writer writer = new FileWriter(file)) {
+      writer.write(xml);
+    }
   }
 
   private void saveAsJSON(List<GroupData> groups, File file) throws IOException{
     ////excludeFieldsWithoutExposeAnnotation() обрабатывать все аннотации в классе GroupData
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     String json = gson.toJson(groups);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try(Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 }
