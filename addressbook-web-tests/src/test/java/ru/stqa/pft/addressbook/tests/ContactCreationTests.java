@@ -34,7 +34,7 @@ public class ContactCreationTests extends TestBase {
     return contacts.stream().map((g)-> new Object[] {g}).collect(Collectors.toList()).iterator();
   }
 
-  @Test//(dataProvider = "validContactsFromJSON")
+  @Test(dataProvider = "validContactsFromJSON")
   public void testContactCreation(ContactData contact) throws Exception {
 
     app.goTo().homePage();
@@ -53,8 +53,7 @@ public class ContactCreationTests extends TestBase {
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     //Создаем множество контактов после добавления
     Contacts after = app.contact().all();
-    //contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-    before.add(contact);
+    contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
     assertThat(after, equalTo(before.withAddet(contact)));
   }
 }
