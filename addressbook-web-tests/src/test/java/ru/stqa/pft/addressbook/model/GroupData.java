@@ -1,12 +1,25 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.util.Objects;
 
+//Подсказка для формата записи класса в файл
+@XStreamAlias("group")
 public class GroupData {
 
+  //@XStreamOmitField пропускаем, не сохраняем поле ID в файл(XStream библиотека)
+  //@Expose оставляем только эти поля(gson библиотека)
+  @XStreamOmitField
   private int id = Integer.MAX_VALUE;
+
+  @Expose
   private String name;
+  @Expose
   private String header;
+  @Expose
   private String footer;
 
   public String getName() {
