@@ -29,6 +29,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("address"), contact.getAddress());
     type(By.name("mobile"), contact.getMobilePhone());
     type(By.name("email"), contact.getEMail());
+    attache(By.name("photo"), contact.getPhoto());
 
     if (creation) {
       //Работа с данными в выпадающем списке
