@@ -178,11 +178,12 @@ public class ContactData {
     return "ContactData{" +
             "id=" + id +
             ", firstName='" + firstName + '\'' +
+            ", eMail='" + eMail + '\'' +
             ", lastName='" + lastName + '\'' +
+            ", address='" + address + '\'' +
             ", mobilePhone='" + mobilePhone + '\'' +
-            ", workPhone='" + workPhone + '\'' +
-            ", homePhone='" + homePhone + '\'' +
+            ", allPhones='" + allPhones + '\'' +
+            ", allEmail='" + allEmail + '\'' +
             '}';
   }
-
 }

@@ -150,14 +150,14 @@ public class ContactHelper extends HelperBase {
     List<WebElement> elements = wd.findElements(By.cssSelector("tr[name=entry]"));
     for (WebElement element : elements) {
       List<WebElement> cell = element.findElements(By.tagName("td"));
-      String name = cell.get(2).getText();
       String lastName = cell.get(1).getText();
+      String firstName = cell.get(2).getText();
       String address = cell.get(3).getText();
       String allEmail = cell.get(4).getText();
       String allPhone = cell.get(5).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      ContactData contact = new ContactData().withId(id).withFirstName(name).withLastName(lastName)
-              .withAllPhone(allPhone).withAllEmail(allEmail).withAddress(address);
+      ContactData contact = new ContactData().withId(id).withLastName(lastName)
+              .withFirstName(firstName).withAddress(address).withAllEmail(allEmail).withAllPhone(allPhone);
       contactsCache.add(contact);
     }
     return new Contacts(contactsCache);
