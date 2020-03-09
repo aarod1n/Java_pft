@@ -67,6 +67,7 @@ public class GroupCreationTests extends TestBase {
     group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
     //Сравнение множеств v2
     assertThat(after, equalTo(before.withAddet(group)));
+    verifyGroupsListInUI();
   }
 
 }

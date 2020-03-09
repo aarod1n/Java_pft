@@ -1,13 +1,11 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.*;
 
 public class GroupDeletionTests  extends TestBase{
 
@@ -32,5 +30,6 @@ public class GroupDeletionTests  extends TestBase{
     Groups after = app.db().groups();
     //Сравнение множеств v2
     assertThat(after, equalTo(before.withOut(deletedGroup)));
+    verifyGroupsListInUI();
   }
 }

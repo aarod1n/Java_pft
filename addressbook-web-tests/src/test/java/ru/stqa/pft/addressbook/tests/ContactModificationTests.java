@@ -41,5 +41,6 @@ public class ContactModificationTests extends TestBase {
     //Получили множество контактов после модификации
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.withOut(contactModification).withAddet(contact)));
+    verifyContactsListInUI();
   }
 }

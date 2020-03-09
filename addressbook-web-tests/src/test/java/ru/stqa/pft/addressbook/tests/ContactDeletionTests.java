@@ -39,5 +39,6 @@ public class ContactDeletionTests extends TestBase {
     assertEquals(after.size(), before.size() - 1);
     //Сравнение множеств v2
     assertThat(after, equalTo(before.withOut(contactDeletion)));
+    verifyContactsListInUI();
   }
 }

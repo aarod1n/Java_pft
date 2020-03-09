@@ -14,21 +14,6 @@ import java.util.Objects;
 public class ContactData {
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return id == that.id &&
-            Objects.equals(firstName, that.firstName) &&
-            Objects.equals(eMail, that.eMail) &&
-            Objects.equals(lastName, that.lastName) &&
-            Objects.equals(address, that.address) &&
-            Objects.equals(mobilePhone, that.mobilePhone) &&
-            Objects.equals(workPhone, that.workPhone) &&
-            Objects.equals(homePhone, that.homePhone);
-  }
-
-  @Override
   public String toString() {
     return "ContactData{" +
             "id=" + id +
@@ -44,11 +29,6 @@ public class ContactData {
             '}';
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, firstName, eMail, lastName, address, mobilePhone, workPhone, homePhone);
-  }
-
   @XStreamOmitField
   @Id
   @Column(name = "id")
@@ -57,40 +37,54 @@ public class ContactData {
   @Column(name = "firstname")
   private String firstName;
 
+  @Column(name = "lastname")
+  private String lastName;
+
   @Column(name = "email")
   @Type(type = "text")
   private String eMail;
 
-  //Пропустить, не извлекать данное поле из БД
-  @Transient
+  @Column(name = "email2")
+  @Type(type = "text")
   private String eMail2;
 
-  @Transient
-  private String eMail3;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id &&
+            Objects.equals(firstName, that.firstName) &&
+            Objects.equals(lastName, that.lastName);
+  }
 
-  @Column(name = "lastname")
-  private String lastName;
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, lastName);
+  }
+
+  @Column(name = "email3")
+  @Type(type = "text")
+  private String eMail3;
 
   @Column(name = "address")
   @Type(type = "text")
   private String address;
 
- @Transient
-  private String group;
-
   @Column(name = "mobile")
   @Type(type = "text")
   private String mobilePhone;
 
-  @Transient
   @Column(name = "work")
   @Type(type = "text")
   private String workPhone;
 
-  @Transient
   @Column(name = "home")
   @Type(type = "text")
   private String homePhone;
+
+  @Transient
+  private String group;
 
   @Transient
   private String allPhones;
@@ -98,6 +92,7 @@ public class ContactData {
   @Transient
   private String allEmail;
 
+  @Transient
   @Column(name = "photo")
   @Type(type = "text")
   private String photo;
