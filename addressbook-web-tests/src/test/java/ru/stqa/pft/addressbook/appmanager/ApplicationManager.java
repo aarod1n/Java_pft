@@ -24,6 +24,7 @@ public class ApplicationManager {
   private SessionHelper sessionHelper;
   private String browser;
   private final Properties properties;
+  private DbHelper dbHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -34,7 +35,8 @@ public class ApplicationManager {
   //Инициализация драйверов и переменных для запуска тестов
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
-    properties.load(new FileReader(new File(String.format("src/test/res/%s.properties", target))));
+    properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+    dbHelper = new DbHelper();
 
     //Выбираем какой браузер использовть в тестах
     if(browser.equals(BrowserType.CHROME)) {
@@ -78,7 +80,10 @@ public class ApplicationManager {
   public SessionHelper getSessionHelper(){
     return sessionHelper;
   }
-  //
+
+  public DbHelper db(){
+    return dbHelper;
+  }
 
   //Для закрытия диалогового окна (alert), которое появляется при удалении контакта, нужно использовать такую команду драйвера:
   public void alertAccept(){

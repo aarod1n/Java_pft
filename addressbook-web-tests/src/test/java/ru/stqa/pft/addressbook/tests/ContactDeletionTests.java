@@ -12,16 +12,12 @@ public class ContactDeletionTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().homePage();
-
-    //Проверяем наличие контакта
-    if (!app.contact().isThereAContact()) {
+    if(app.db().contacts().size() == 0) {
+      app.goTo().homePage();
       app.goTo().newContact();
-      app.contact()
-              .creation(new ContactData()
-                              .withGroup("test1").withFirstName("FistName").withEMail("qwe@mail.ru")
-                              .withLastName("LastName").withAddress("qwer, asdf 4, 123").withMobilePhone("123345234"),
-                      true);
+      app.contact().creation(new ContactData().withGroup("test1").withFirstName("FistName")
+              .withEMail("qwe@mail.ru").withLastName("LastName")
+              .withAddress("qwer, asdf 4, 123").withMobilePhone("123345234"),true);
     }
   }
 
@@ -30,7 +26,7 @@ public class ContactDeletionTests extends TestBase {
 
     app.goTo().homePage();
     //Создаем множество контактов изначально
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     //Получаем рандомно контак для удаления
     ContactData contactDeletion = before.iterator().next();
     app.contact().contactDeletionById(contactDeletion.getId());
@@ -39,7 +35,7 @@ public class ContactDeletionTests extends TestBase {
     //Быстрая проверка
     assertThat(app.contact().count(), equalTo(before.size() - 1));
     //Создаем множество контактов после удаления
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertEquals(after.size(), before.size() - 1);
     //Сравнение множеств v2
     assertThat(after, equalTo(before.withOut(contactDeletion)));

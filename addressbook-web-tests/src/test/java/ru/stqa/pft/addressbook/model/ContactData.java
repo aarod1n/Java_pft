@@ -1,38 +1,114 @@
 package ru.stqa.pft.addressbook.model;
 
-import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id &&
+            Objects.equals(firstName, that.firstName) &&
+            Objects.equals(eMail, that.eMail) &&
+            Objects.equals(lastName, that.lastName) &&
+            Objects.equals(address, that.address) &&
+            Objects.equals(mobilePhone, that.mobilePhone) &&
+            Objects.equals(workPhone, that.workPhone) &&
+            Objects.equals(homePhone, that.homePhone);
+  }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", eMail='" + eMail + '\'' +
+            ", eMail2='" + eMail2 + '\'' +
+            ", eMail3='" + eMail3 + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", address='" + address + '\'' +
+            ", mobilePhone='" + mobilePhone + '\'' +
+            ", workPhone='" + workPhone + '\'' +
+            ", homePhone='" + homePhone + '\'' +
+            '}';
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, eMail, lastName, address, mobilePhone, workPhone, homePhone);
+  }
+
   @XStreamOmitField
+  @Id
+  @Column(name = "id")
   private int id = Integer.MAX_VALUE;
-  @Expose
+
+  @Column(name = "firstname")
   private String firstName;
-  @Expose
+
+  @Column(name = "email")
+  @Type(type = "text")
   private String eMail;
+
+  //Пропустить, не извлекать данное поле из БД
+  @Transient
   private String eMail2;
+
+  @Transient
   private String eMail3;
-  @Expose
+
+  @Column(name = "lastname")
   private String lastName;
-  @Expose
+
+  @Column(name = "address")
+  @Type(type = "text")
   private String address;
+
+ @Transient
   private String group;
-  @Expose
+
+  @Column(name = "mobile")
+  @Type(type = "text")
   private String mobilePhone;
+
+  @Transient
+  @Column(name = "work")
+  @Type(type = "text")
   private String workPhone;
+
+  @Transient
+  @Column(name = "home")
+  @Type(type = "text")
   private String homePhone;
+
+  @Transient
   private String allPhones;
+
+  @Transient
   private String allEmail;
-  private File photo;
+
+  @Column(name = "photo")
+  @Type(type = "text")
+  private String photo;
+
 
   public File getPhoto(){
-    return photo;
+    if (photo == null) {
+      return null;
+    } else {
+      return new File(photo);
+    }
   }
 
   public String getAllEmail() {
@@ -52,7 +128,7 @@ public class ContactData {
   }
 
   public String getWorkPhone() {
-    return workPhone;
+      return workPhone;
   }
 
   public String getFirstName() {
@@ -88,7 +164,7 @@ public class ContactData {
   }
 
   public ContactData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
 
@@ -128,8 +204,8 @@ public class ContactData {
   }
 
   public ContactData withMobilePhone(String mobilePhone) {
-    this.mobilePhone = mobilePhone;
-    return this;
+      this.mobilePhone = mobilePhone;
+      return this;
   }
 
   public ContactData withHomePhone(String homePhone) {
@@ -138,8 +214,8 @@ public class ContactData {
   }
 
   public ContactData withWorkPhone(String workPhone) {
-    this.workPhone = workPhone;
-    return this;
+      this.workPhone = workPhone;
+      return this;
   }
 
   public ContactData withAllPhone(String allPhone) {
@@ -157,32 +233,4 @@ public class ContactData {
     return this;
   }
 
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "id=" + id +
-            ", firstName='" + firstName + '\'' +
-            ", eMail='" + eMail + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", address='" + address + '\'' +
-            ", mobilePhone='" + mobilePhone + '\'' +
-            ", allPhones='" + allPhones + '\'' +
-            ", allEmail='" + allEmail + '\'' +
-            '}';
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return id == that.id &&
-            Objects.equals(firstName, that.firstName) &&
-            Objects.equals(lastName, that.lastName);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, firstName, lastName);
-  }
 }

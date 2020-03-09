@@ -1,0 +1,42 @@
+<list>
+  <contact>
+    <delegate/>
+    <firstName>FirstName 0</firstName>
+    <eMail>eMail 0</eMail>
+    <lastName>LastName 0</lastName>
+    <address>Address 0</address>
+    <mobilePhone>mobilePhone 0</mobilePhone>
+  </contact>
+  <contact>
+    <delegate/>
+    <firstName>FirstName 1</firstName>
+    <eMail>eMail 1</eMail>
+    <lastName>LastName 1</lastName>
+    <address>Address 1</address>
+    <mobilePhone>mobilePhone 1</mobilePhone>
+  </contact>
+  <contact>
+    <delegate/>
+    <firstName>FirstName 2</firstName>
+    <eMail>eMail 2</eMail>
+    <lastName>LastName 2</lastName>
+    <address>Address 2</address>
+    <mobilePhone>mobilePhone 2</mobilePhone>
+  </contact>
+  <contact>
+    <delegate/>
+    <firstName>FirstName 3</firstName>
+    <eMail>eMail 3</eMail>
+    <lastName>LastName 3</lastName>
+    <address>Address 3</address>
+    <mobilePhone>mobilePhone 3</mobilePhone>
+  </contact>
+  <contact>
+    <delegate/>
+    <firstName>FirstName 4</firstName>
+    <eMail>eMail 4</eMail>
+    <lastName>LastName 4</lastName>
+    <address>Address 4</address>
+    <mobilePhone>mobilePhone 4</mobilePhone>
+  </contact>
+</list>
