@@ -5,33 +5,5 @@
     "lastName": "LastName 0",
     "address": "Address 0",
     "mobilePhone": "mobilePhone 0"
-  },
-  {
-    "firstName": "FirstName 1",
-    "eMail": "eMail 1",
-    "lastName": "LastName 1",
-    "address": "Address 1",
-    "mobilePhone": "mobilePhone 1"
-  },
-  {
-    "firstName": "FirstName 2",
-    "eMail": "eMail 2",
-    "lastName": "LastName 2",
-    "address": "Address 2",
-    "mobilePhone": "mobilePhone 2"
-  },
-  {
-    "firstName": "FirstName 3",
-    "eMail": "eMail 3",
-    "lastName": "LastName 3",
-    "address": "Address 3",
-    "mobilePhone": "mobilePhone 3"
-  },
-  {
-    "firstName": "FirstName 4",
-    "eMail": "eMail 4",
-    "lastName": "LastName 4",
-    "address": "Address 4",
-    "mobilePhone": "mobilePhone 4"
   }
 ]

@@ -8,6 +8,11 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
@@ -18,13 +23,19 @@ public class ApplicationManager {
   private ContactHelper contactHelper;
   private SessionHelper sessionHelper;
   private String browser;
+  private final Properties properties;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
+    properties = new Properties();
+
   }
 
   //Инициализация драйверов и переменных для запуска тестов
-  public void init() {
+  public void init() throws IOException {
+    String target = System.getProperty("target", "local");
+    properties.load(new FileReader(new File(String.format("src/test/res/%s.properties", target))));
+
     //Выбираем какой браузер использовть в тестах
     if(browser.equals(BrowserType.CHROME)) {
       wd = new ChromeDriver();
@@ -35,12 +46,12 @@ public class ApplicationManager {
     }
 
     wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-    wd.get("http://localhost/addressbook/");
+    wd.get(properties.getProperty("web.baseURL"));
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);
     contactHelper = new ContactHelper(wd);
     sessionHelper = new SessionHelper(wd);
-    sessionHelper.login("admin", "secret");
+    sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
   }
 
   public void stop() {

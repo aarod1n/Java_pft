@@ -3,25 +3,5 @@
     "name": "Name 0",
     "header": "Header 0",
     "footer": "Footer 0"
-  },
-  {
-    "name": "Name 1",
-    "header": "Header 1",
-    "footer": "Footer 1"
-  },
-  {
-    "name": "Name 2",
-    "header": "Header 2",
-    "footer": "Footer 2"
-  },
-  {
-    "name": "Name 3",
-    "header": "Header 3",
-    "footer": "Footer 3"
-  },
-  {
-    "name": "Name 4",
-    "header": "Header 4",
-    "footer": "Footer 4"
   }
 ]
