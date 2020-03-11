@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,29 +32,14 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contact.getEMail());
     attache(By.name("photo"), contact.getPhoto());
 
-    if (creation) {
-      //Работа с данными в выпадающем списке
-      Select select = new Select(wd.findElement(By.name("new_group")));
-      List<WebElement> list = select.getOptions();
-
-      //Если группы есть и есть равная переданной, берем ее
-      //Если группы есть, но нету переданной, берем первую существующую
-      //Если групп нет, ставим [none]
-      if (list.size() > 1) {
-        boolean itemFound = false;
-        for (int i = 0; i < list.size(); i++) {
-          if (list.get(i).getText().equals(contact.getGroup())) {
-            select.selectByVisibleText(contact.getGroup());
-            itemFound = true;
-            break;
-          }
-        }
-        if (!itemFound)
-          select.selectByVisibleText(list.get(1).getText());
-      } else {
-        select.selectByVisibleText(select.getFirstSelectedOption().getText());
-      }
-    } else {
+    if (contact.getGroups().size() > 0) {
+      Assert.assertTrue(contact.getGroups().size()==1);
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contact.getGroups().iterator().next().getName());
+    }
+    else if (creation && contact.getGroups().size() == 0) {
+      new Select(wd.findElement(By.name("new_group"))).getFirstSelectedOption();
+    }
+    else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
@@ -117,7 +103,7 @@ public class ContactHelper extends HelperBase {
     contactsCache = null;
   }
 
-  private void selectContactById(int id) {
+  public void selectContactById(int id) {
     click(By.cssSelector("input[value='" + id + "']"));
   }
 
@@ -184,5 +170,18 @@ public class ContactHelper extends HelperBase {
             .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone);
   }
 
+  public void selectGroupForAddContact(String name){
+    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(name);
+  }
 
+
+  public void addToGroups(ContactData contact, GroupData group) {
+    selectContactById(contact.getId());
+    selectGroupForAddContact(group.getName());
+    AddToGroupClick();
+  }
+
+  private void AddToGroupClick() {
+    click(By.name("add"));
+  }
 }

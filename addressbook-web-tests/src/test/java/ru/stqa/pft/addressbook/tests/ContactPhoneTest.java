@@ -32,7 +32,7 @@ public class ContactPhoneTest extends TestBase {
       app.goTo().newContact();
       app.contact()
               .creation(new ContactData()
-                              .withGroup("test1").withFirstName("FistName").withEMail("qwe@mail.ru")
+                              .withFirstName("FistName").withEMail("qwe@mail.ru")
                               .withLastName("LastName").withAddress("qwer, asdf 4, 123").withMobilePhone("123345234"),
                       true);
     }

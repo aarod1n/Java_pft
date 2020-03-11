@@ -37,7 +37,6 @@ public class ContactCreationTests extends TestBase {
 
   @Test(dataProvider = "validContactsFromJSON")
   public void testContactCreation(ContactData contact) throws Exception {
-
     app.goTo().homePage();
     //Создаем множество контактов изначально
     Contacts before = app.db().contacts();

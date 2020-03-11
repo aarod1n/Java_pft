@@ -55,7 +55,10 @@ public class HbConnectionTests {
     session.beginTransaction();
     List<ContactData> result = session.createQuery( "from ContactData" ).list();
     for (ContactData contact : result) {
+      System.out.println("-----------------------------------");
       System.out.println(contact);
+      System.out.println(contact.getGroups());
+      System.out.println("------------------------------------");
     }
     session.getTransaction().commit();
     session.close();

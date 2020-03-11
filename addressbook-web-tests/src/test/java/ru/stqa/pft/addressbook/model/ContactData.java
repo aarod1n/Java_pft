@@ -2,32 +2,19 @@ package ru.stqa.pft.addressbook.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
 @Table(name = "addressbook")
 public class ContactData {
-
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "id=" + id +
-            ", firstName='" + firstName + '\'' +
-            ", eMail='" + eMail + '\'' +
-            ", eMail2='" + eMail2 + '\'' +
-            ", eMail3='" + eMail3 + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", address='" + address + '\'' +
-            ", mobilePhone='" + mobilePhone + '\'' +
-            ", workPhone='" + workPhone + '\'' +
-            ", homePhone='" + homePhone + '\'' +
-            '}';
-  }
 
   @XStreamOmitField
   @Id
@@ -47,21 +34,6 @@ public class ContactData {
   @Column(name = "email2")
   @Type(type = "text")
   private String eMail2;
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return id == that.id &&
-            Objects.equals(firstName, that.firstName) &&
-            Objects.equals(lastName, that.lastName);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, firstName, lastName);
-  }
 
   @Column(name = "email3")
   @Type(type = "text")
@@ -83,8 +55,12 @@ public class ContactData {
   @Type(type = "text")
   private String homePhone;
 
-  @Transient
-  private String group;
+/*  @Transient
+  private String group;*/
+@ManyToMany(fetch = FetchType.EAGER)
+@JoinTable(name = "address_in_groups",
+        joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+private Set<GroupData> groups = new HashSet<GroupData>();
 
   @Transient
   private String allPhones;
@@ -97,6 +73,13 @@ public class ContactData {
   @Type(type = "text")
   private String photo;
 
+  public ContactData inGroup(GroupData group){
+    if (groups == null) {
+      groups = new HashSet<>();
+    }
+    groups.add(group);
+    return this;
+  }
 
   public File getPhoto(){
     if (photo == null) {
@@ -148,10 +131,6 @@ public class ContactData {
 
   public String getAddress() {
     return address;
-  }
-
-  public String getGroup() {
-    return group;
   }
 
   public int getId() {
@@ -223,9 +202,48 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withGroup(String group) {
+/*  public ContactData withGroup(String group) {
     this.group = group;
     return this;
+  }
+
+  public String getGroup() {
+    return group;
+  }*/
+
+public Groups getGroups(){
+  return new Groups(groups);
+}
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id &&
+            Objects.equals(firstName, that.firstName) &&
+            Objects.equals(lastName, that.lastName);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, lastName);
+  }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", eMail='" + eMail + '\'' +
+            ", eMail2='" + eMail2 + '\'' +
+            ", eMail3='" + eMail3 + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", address='" + address + '\'' +
+            ", mobilePhone='" + mobilePhone + '\'' +
+            ", workPhone='" + workPhone + '\'' +
+            ", homePhone='" + homePhone + '\'' +
+            '}';
   }
 
 }
