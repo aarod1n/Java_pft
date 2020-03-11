@@ -7,12 +7,14 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import java.util.stream.Collectors;
+
 public class ContactAddToGroupTests extends TestBase {
 
   ContactData newContact = null;
   GroupData newGroup = null;
   GroupData validGroup = null;
-  ContactData validContact;
+  ContactData validContact = null;
   double rand;
 
   @BeforeMethod
@@ -41,15 +43,14 @@ public class ContactAddToGroupTests extends TestBase {
     //Обновляем множества и пробегаем в поиске валидной группы для добавления в нее контакта
     Groups groups = app.db().groups();
     Contacts contacts = app.db().contacts();
-    for(GroupData group : groups){
-      for(ContactData contact : contacts){
-        for(GroupData g : contact.getGroups()){
-          if(! group.getName().equals(g.getName())){
+    for(ContactData contact : contacts){
+      for(GroupData group : groups){
+        if(groups.stream().filter(g -> g.getName().equals(group.getName())).collect(Collectors.toList()).size() < 2){
+          if(!(contact.getGroups().contains(group)))
             validGroup = group;
             validContact = contact;
           }
         }
-      }
     }
     if(validGroup == null){
       rand = Math.random()*3;

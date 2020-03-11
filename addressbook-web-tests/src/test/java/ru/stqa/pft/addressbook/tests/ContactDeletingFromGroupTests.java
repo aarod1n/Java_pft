@@ -21,19 +21,31 @@ public class ContactDeletingFromGroupTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions(){
+
+    ContactData newContact = null;
+    GroupData newGroup = null;
+    GroupData validGroup = null;
+    ContactData validContact;
+    double rand;
+
     //Нет групп, создаем
     if(app.db().groups().size() == 0){
       app.goTo().groupPage();
-      validGroup = new GroupData().withName("test1").withFooter("test1").withHeader("test1");
-      app.group().create(validGroup);
+      rand = Math.random()*3;
+      newGroup = new GroupData().withName("test1" + rand).withFooter("test1").withHeader("test1");
+      app.group().create(newGroup);
+      Groups groupsRefresh = app.db().groups();
+      newGroup.withId(groupsRefresh.stream().mapToInt((g) -> g.getId()).max().getAsInt());
     }
     //Нет контакта, создаем
     if(app.db().contacts().size() == 0) {
       app.goTo().homePage();
       app.goTo().newContact();
-      validContact = new ContactData().withFirstName("FistName").withEMail("qwe@mail.ru").withLastName("LastName")
+      newContact = new ContactData().withFirstName("FistName").withEMail("qwe@mail.ru").withLastName("LastName")
               .withAddress("qwer, asdf 4, 123").withMobilePhone("123345234");
-      app.contact().creation(validContact,true);
+      app.contact().creation(newContact,true);
+      Contacts contactRefresh = app.db().contacts();
+      newContact.withId(contactRefresh.stream().mapToInt((g) -> g.getId()).max().getAsInt());
     }
   }
 
@@ -42,9 +54,6 @@ public class ContactDeletingFromGroupTests extends TestBase {
     app.goTo().homePage();
     Groups groups = app.db().groups();
     Contacts contacts = app.db().contacts();
-
-
-
   }
 
 
