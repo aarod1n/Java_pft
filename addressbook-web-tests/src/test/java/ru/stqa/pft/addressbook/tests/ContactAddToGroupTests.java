@@ -8,75 +8,71 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.stream.Collectors;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+
 
 public class ContactAddToGroupTests extends TestBase {
 
   ContactData newContact = null;
   GroupData newGroup = null;
-  GroupData validGroup = null;
-  ContactData validContact = null;
   double rand;
 
   @BeforeMethod
-  public void ensurePreconditions(){
+  public void ensurePreconditions() {
 
     //Нет групп, создаем
-    if(app.db().groups().size() == 0){
+    if (app.db().groups().size() == 0) {
       app.goTo().groupPage();
-      rand = Math.random()*3;
+      rand = Math.random() * 3;
       newGroup = new GroupData().withName("test1" + rand).withFooter("test1").withHeader("test1");
       app.group().create(newGroup);
       Groups groupsRefresh = app.db().groups();
       newGroup.withId(groupsRefresh.stream().mapToInt((g) -> g.getId()).max().getAsInt());
     }
     //Нет контакта, создаем
-    if(app.db().contacts().size() == 0) {
+    if (app.db().contacts().size() == 0) {
       app.goTo().homePage();
       app.goTo().newContact();
       newContact = new ContactData().withFirstName("FistName").withEMail("qwe@mail.ru").withLastName("LastName")
               .withAddress("qwer, asdf 4, 123").withMobilePhone("123345234");
-      app.contact().creation(newContact,true);
+      app.contact().creation(newContact, true);
       Contacts contactRefresh = app.db().contacts();
       newContact.withId(contactRefresh.stream().mapToInt((g) -> g.getId()).max().getAsInt());
     }
-
-    //Обновляем множества и пробегаем в поиске валидной группы для добавления в нее контакта
+    //Обновляем множества пробегаем в поиске валидной группы для добавления в нее контакта
     Groups groups = app.db().groups();
     Contacts contacts = app.db().contacts();
-    for(ContactData contact : contacts){
-      for(GroupData group : groups){
-        if(groups.stream().filter(g -> g.getName().equals(group.getName())).collect(Collectors.toList()).size() < 2){
-          if(!(contact.getGroups().contains(group)))
-            validGroup = group;
-            validContact = contact;
+    for (ContactData contact : contacts) {
+      for (GroupData group : groups) {
+        if (groups.stream().filter(g -> g.getName().equals(group.getName())).collect(Collectors.toList()).size() < 2) {
+          if (!(contact.getGroups().contains(group))) {
+            newGroup = group;
+            newContact = contact;
+            return;
           }
         }
+      }
     }
-    if(validGroup == null){
-      rand = Math.random()*3;
-      validGroup = new GroupData().withName("test1" + rand).withFooter("test1").withHeader("test1");
-      app.goTo().homePage();
+    if ((newContact == null && newGroup == null)) {
+      rand = Math.random() * 3;
+      newGroup = new GroupData().withName("test1" + rand).withFooter("test1").withHeader("test1");
       app.goTo().groupPage();
-      app.group().create(validGroup);
+      app.group().create(newGroup);
       Groups groupsRefresh = app.db().groups();
-      validGroup.withId(groupsRefresh.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-    }
-    if(validContact == null){
-      validContact = contacts.iterator().next();
+      newGroup.withId(groupsRefresh.stream().mapToInt((g) -> g.getId()).max().getAsInt());
+      newContact = contacts.iterator().next();
     }
   }
 
   @Test
   public void ContactAddToGroup() {
     app.goTo().homePage();
-    if(newContact != null){
-      if(newGroup != null){
-        app.contact().addToGroups(newContact, newGroup);
-      }else {
-        app.contact().addToGroups(newContact, validGroup);
-      }
-     }else {
-      app.contact().addToGroups(validContact, validGroup);
-    }
+    app.contact().addToGroups(newContact, newGroup);
+    //Послк добавления получили актуальное множество
+    Contacts cs = app.db().contacts();
+    //Достаем из множества нужный контакт и проверяем его вхождение в нашу группу
+    ContactData contactForAssert = app.contact().getContact(cs, newContact.getId());
+    assertThat(contactForAssert.getGroups(), hasItem(newGroup));
   }
 }
