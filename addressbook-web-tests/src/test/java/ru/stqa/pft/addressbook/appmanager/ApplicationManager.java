@@ -6,10 +6,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
-
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.net.URL;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -38,13 +39,19 @@ public class ApplicationManager {
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
     dbHelper = new DbHelper();
 
-    //Выбираем какой браузер использовть в тестах
-    if(browser.equals(BrowserType.CHROME)) {
-      wd = new ChromeDriver();
-    } else if (browser.equals(BrowserType.FIREFOX)) {
-      wd = new FirefoxDriver();
-    } else if (browser.equals(BrowserType.IE)){
-      wd = new InternetExplorerDriver();
+    if ("".equals(properties.getProperty("selenium.server"))) {
+      //Выбираем какой браузер использовть в тестах
+      if (browser.equals(BrowserType.CHROME)) {
+        wd = new ChromeDriver();
+      } else if (browser.equals(BrowserType.FIREFOX)) {
+        wd = new FirefoxDriver();
+      } else if (browser.equals(BrowserType.IE)) {
+        wd = new InternetExplorerDriver();
+      }
+    } else {
+      DesiredCapabilities capabilities = new DesiredCapabilities();
+      capabilities.setBrowserName(browser);
+      wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
     }
 
     wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
@@ -69,24 +76,24 @@ public class ApplicationManager {
     return groupHelper;
   }
 
-  public NavigationHelper goTo(){
+  public NavigationHelper goTo() {
     return navigationHelper;
   }
 
-  public ContactHelper contact(){
+  public ContactHelper contact() {
     return contactHelper;
   }
 
-  public SessionHelper getSessionHelper(){
+  public SessionHelper getSessionHelper() {
     return sessionHelper;
   }
 
-  public DbHelper db(){
+  public DbHelper db() {
     return dbHelper;
   }
 
   //Для закрытия диалогового окна (alert), которое появляется при удалении контакта, нужно использовать такую команду драйвера:
-  public void alertAccept(){
+  public void alertAccept() {
     wd.switchTo().alert().accept();
   }
 
