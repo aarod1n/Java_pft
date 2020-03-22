@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.stqa.pft.github.GithubTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-22T00:42:25" hostname="onepc" time="50.606">
+  <properties/>
+  <testcase name="testCommits" classname="ru.stqa.pft.github.GithubTests" time="50.606"/>
+  <system-out><![CDATA[Задание №20: Реализовал интеграцию тестов с баг-трекером Bugify
+Исправления 19_Адрес получаем из local.properties методом getProperty()
+Исправления 19_Адрес получаем из local.properties методом getProperty()
+REST: взаимодействие с Bugify
+Задание №19: Реализовал интеграцию тестов с баг-трекером MantisBT
+Задание №18: Реализовал тест для смены пароля в MantisBT
+Замена конфигов на фтп
+Добавлен модуль для тестов mantis
+Завершенный вариант ContactAddToGroup() и ContactDeletingFromGroup() с проверками и предусловиями
+Сделал в тесте ContactAddToGroup() провери.
+Исправил логику добавления контакта в группу
+Добавление контакта в группу
+Отключаемые проверки UI
+Задание №15: Реализовать проверку данных, загружаемых из БД
+Вынес описание тестового стенда в конфигурационный файл
+Добавил закрытие файлов с помощью try для групп как пример.
+Параметризовал тесты для создания групп и контактов. Использую json
+Исправил ошибку с неправильным наследованием ContactData от Contacts
+Временное состояние с генератором для контактов(сломалось сравнение)
+Реализовал генераторы тестовых данных для групп и для контактов, которые сохраняют данные в файл в формате XML или JSON
+Генерируем данные с помощью библиотеки JCommander
+Реализовал тесты для проверки информации о контактах на главной странице
+Убрал лишние проверки в тестах, оставил только для Задание №10
+Реализовал проверки в fluent-стиле
+проверки в fluent-стиле для групп
++ Fluent-интерфейсы для контактов
+Fluent-интерфейсы
+Добавлен ensurePreconditions() в изменение и удаление групп
+Реализовал проверки путём сравнения списков(убрал дублирование строк)
+Реализовал проверки путём сравнения списков
+selectGroup(int index) добавил выбор группы
+Тренировочные тесты на циклах
+Реализовал проверку и обеспечение предусловий в тестах
+В NavigationHelper добавлены провери нахождения на страницы
+Оптимизация type(By locator, String text)
+Научил менеджер работать с разными браузерами
+тесты для удаления и модификации групп и контактов
+
+123
+Создан class HelperBase
+Добавлены: менеджер и хелперы.
+Добавил testGroupDeletion()
+Создан testContactCreation()
+Рефакторинг. Создан class GroupData. Отредактирован testGroupCreation()
+Первый testGroupCreation
+Добавлен PointTests
+Создан класс Point. Создана функция distance и метод distance в классе Point.
+Проетк отвязан от репозитория в IDEA от GIT
+Изменены настройки форматирования
+Создан пакет для MyFirstProgram
+Создан проект для IDEA
+Добавлен запускатель
+Создан проект "песочница"
+Initial commit
+]]></system-out>
+  <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+]]></system-err>
+</testsuite>
