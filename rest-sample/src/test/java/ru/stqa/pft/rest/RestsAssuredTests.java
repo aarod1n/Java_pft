@@ -23,7 +23,7 @@ public class RestsAssuredTests {
   @Test
   public void createIssue() throws IOException {
     Set<Issue> oldIssues = getIssues();
-    Issue newIssue = new Issue().withSubject("Test issue 333333").withDescription("New test issue 333333");
+    Issue newIssue = new Issue().withSubject("Test issue 129999").withDescription("New test issue 9999999");
     int issueId = createIssue(newIssue);
     oldIssues.add(newIssue.withId(issueId));
     Set<Issue> newIssues = getIssues();
@@ -41,7 +41,7 @@ public class RestsAssuredTests {
     String json = RestAssured.given()
             .parameter("subject", newIssue.getSubject())
             .parameter("description", newIssue.getDescription())
-            .post("https://bugify.stqa.ru/api/issues.json?limit=500").asString();
+            .post("https://bugify.stqa.ru/api/issues.json?limit=1000").asString();
     JsonElement parsed = new JsonParser().parse(json);
     return parsed.getAsJsonObject().get("issue_id").getAsInt();
   }

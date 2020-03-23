@@ -7,7 +7,7 @@ public class Issue {
   private int id;
   private String subject;
   private String description;
-  private String stateName;
+  private String state_name;
 
   public int getId() {
     return id;
@@ -37,11 +37,11 @@ public class Issue {
   }
 
   public String getStateName() {
-    return stateName;
+    return state_name;
   }
 
   public Issue withStateName(String state_name) {
-    this.stateName = state_name;
+    this.state_name = state_name;
     return this;
   }
 
@@ -52,13 +52,11 @@ public class Issue {
     Issue issue = (Issue) o;
     return id == issue.id &&
             Objects.equals(subject, issue.subject) &&
-            Objects.equals(description, issue.description) &&
-            Objects.equals(stateName, issue.stateName);
+            Objects.equals(description, issue.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, subject, description, stateName);
+    return Objects.hash(id, subject, description);
   }
-
 }

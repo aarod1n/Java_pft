@@ -1,4 +1,5 @@
 package ru.stqa.pft.rest;
+
 import org.apache.http.client.fluent.Request;
 import org.testng.SkipException;
 import com.google.gson.Gson;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.util.Set;
 
 
-
 public class TestBase {
 
   public Set<Issue> getIssues() throws IOException {
@@ -19,8 +19,8 @@ public class TestBase {
     JsonElement parsed = new JsonParser().parse(json);
     JsonElement issues = parsed.getAsJsonObject().get("issues");
     return new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {}.getType());
-
   }
+
   public static Executor getExecutor(){
     return Executor.newInstance().auth("288f44776e7bec4bf44fdfeb1e646490", "");
   }
@@ -33,17 +33,16 @@ public class TestBase {
     return parsed.getAsJsonObject().get("issue_id").getAsInt();
   }
 
-
   public static boolean isIssueOpen(int issueId) throws IOException {
-
-     String json = getExecutor().execute(Request.Get("https://bugify.stqa.ru/api/issues.json?limit=500")).returnContent().asString();
+    String json = getExecutor().execute(Request.Get("https://bugify.stqa.ru/api/issues/" + issueId + ".json")).returnContent().asString();
     JsonElement parsed = new JsonParser().parse(json);
     JsonElement issues = parsed.getAsJsonObject().get("issues");
     Set<Issue> issue = new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {}.getType());//множество баг репортов
     Issue issue1= issue.iterator().next().withId(issueId);
+    String str = issue1.getStateName();
     if (issue1.getStateName().equals("Resolved")) {
       return true;
-     }
+    }
     return false;
   }
 
